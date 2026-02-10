@@ -46,26 +46,26 @@ $$ \frac{\partial \mathcal{L}}{\partial \hat{x}_i} = \frac{\partial \mathcal{L}}
 
 ## Results
 <div align="center">
-  <img src="./assets/BN_1.png" width="500" />
+  <img src=".././assets/BN_1.png" width="500" />
   <p><i>MNIST network training</i></p>
 </div>
 
 As shown above, batch normalization helps reduce the number of steps to reach high generalisation accuracy
 
 <div align="center">
-  <img src="./assets/BN_2.png" width="500" />
+  <img src=".././assets/BN_2.png" width="500" />
   <p><i>Inception network training</i></p>
 </div>
 
 <div align="center">
-  <img src="./assets/BN_3.png" width="500" />
+  <img src=".././assets/BN_3.png" width="500" />
   <p><i>Inception network results</i></p>
 </div>
 
 As seen above, batch normalization speeds up convergence as well as improves accuracy in certain scenarios
 
 <div align="center">
-  <img src="./assets/BN_4.png" width="500" />
+  <img src=".././assets/BN_4.png" width="500" />
   <p><i>Comparison with previous state-of-the-art results</i></p>
 </div>
 
