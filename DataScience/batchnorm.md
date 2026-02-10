@@ -11,24 +11,38 @@ To solve internal covariate shift, activations are normalized before entering th
 ## Method 
 For a given mini-batch, the following transformation is applied to each input feature during training-
 Calculation of mean:
+
 $$ \mu_{\mathcal{B}} \leftarrow \frac{1}{m} \sum_{i=1}^m x_i $$
+
 Calculation of variance:
+
 $$ \sigma_{\mathcal{B}}^2 \leftarrow \frac{1}{m} \sum_{i=1}^m (x_i - \mu_{\mathcal{B}})^2 $$
+
 Normalization:
+
 $$ \hat{x}_i \leftarrow \frac{x_i - \mu_{\mathcal{B}}}{\sqrt{\sigma_{\mathcal{B}}^2 + \epsilon}} $$
+
 where $\epsilon$ is a small constant added for numerical stability
+
 Scaling and shifting:
+
 $$ y_i \leftarrow \gamma \hat{x}_i + \beta $$
 
 During inference, the network uses the moving average of the mean and variance (collected during training) rather than the batch statistics. This ensures a deterministic output for a given input.
 
 The gradients for the backward pass are-
 Gradient for scale parameter:
+
 $$ \frac{\partial \mathcal{L}}{\partial \gamma} = \sum_{i=1}^m \frac{\partial \mathcal{L}}{\partial y_i} \cdot \hat{x}_i $$
+
 Gradient for shift parameter:
+
 $$ \frac{\partial \mathcal{L}}{\partial \beta} = \sum_{i=1}^m \frac{\partial \mathcal{L}}{\partial y_i} $$
+
 Gradient for input:
+
 $$ \frac{\partial \mathcal{L}}{\partial x_i} = \frac{1}{m \sqrt{\sigma_{\mathcal{B}}^2 + \epsilon}} \left( m \frac{\partial \mathcal{L}}{\partial \hat{x}_i} - \sum_{j=1}^m \frac{\partial \mathcal{L}}{\partial \hat{x}_j} - \hat{x}_i \sum_{j=1}^m \frac{\partial \mathcal{L}}{\partial \hat{x}_j} \hat{x}_j \right) $$
+
 where 
 $$ \frac{\partial \mathcal{L}}{\partial \hat{x}_i} = \frac{\partial \mathcal{L}}{\partial y_i} \cdot \gamma $$
 
