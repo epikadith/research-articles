@@ -55,7 +55,7 @@ The self-attention mechanism in the transformer allows BERT to perform various d
 * sentence pairs in paraphrasing
 * hypothesis-premise pairs in entailment
 * question-passage pairs in question answering
-* a degenerate text-\(\emptyset\) pair in text classification/sequence tagging
+* a degenerate $\text{text-}\emptyset$ pair in text classification/sequence tagging
 
 For token-level tasks the output token hidden vectors are fed into an output layer. For classification tasks the [CLS] token is fed into an output layer.
 
