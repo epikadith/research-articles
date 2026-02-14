@@ -7,13 +7,15 @@ BERT (Bidirectional Encoder Representations from Transformers) is a bidirectiona
 
 ## Architecture
 The model is pre-trained on unlabeled data over different tasks. For any downstream task, the model is initialized with the pre-trained model's weights, and then the weights are fine-tuned using labeled data. 
+
 <div align="center">
   <img src=".././assets/BERT_1.png" width="500" />
   <p><i>Visualization of pre-training and fine-tuning tasks</i></p>
 </div>
-BERT is a multi-layer bidirectional transformer. The number of layers is denoted as *L*, the hidden size as *H*, and the number of self-attention heads as *A*. Two models are primarily reported on, $\textbf{BERT_BASE}$ (12 layers, 768 hidden size, 12 attention heads per layer, 110M parameters) and $\textbf{BERT_LARGE}$ (24 layers, 1024 hidden size, 16 attention heads per layer, 340M parameters).
 
-$BERT_BASE$ has a similar model size to OpenAI's GPT model. The key difference between the models is that the BERT transformer uses bidirectional self-attention, while the GPT transformer uses constrained self-attention. 
+BERT is a multi-layer bidirectional transformer. The number of layers is denoted as *L*, the hidden size as *H*, and the number of self-attention heads as *A*. Two models are primarily reported on, $\textbf{BERT_\text{BASE}}$ (12 layers, 768 hidden size, 12 attention heads per layer, 110M parameters) and $\textbf{BERT_\text{LARGE}}$ (24 layers, 1024 hidden size, 16 attention heads per layer, 340M parameters).
+
+$BERT_\text{BASE}$ has a similar model size to OpenAI's GPT model. The key difference between the models is that the BERT transformer uses bidirectional self-attention, while the GPT transformer uses constrained self-attention. 
 
 ## Text Representation
 A single sentence or a pair of sentences can be represented as a single sequence. WordPiece embeddings (30,000 vocabulary size) are used to tokenize the text.
@@ -24,7 +26,7 @@ To separate sentences, a special separator token ([SEP]) is added between the se
 
 Learned position embeddings are added, unlike the sinusoidal position embeddings used in the original transformer model.
 
-Input embeddings are denoted as *E*, the final hidden vector corresponding to [CLS] as $C \in \mathbb{R}^H$, and the final hidden vector corresponding to the ${i}^th$ token as $T_i \in \mathbb{R}^H$. Hence, a token's representation is the sum of token, segment, and position embeddings. 
+Input embeddings are denoted as *E*, the final hidden vector corresponding to [CLS] as $C \in \mathbb{R}^H$, and the final hidden vector corresponding to the $i^\text{th}$ token as $T_i \in \mathbb{R}^H$. Hence, a token's representation is the sum of token, segment, and position embeddings. 
 
 <div align="center">
   <img src=".././assets/BERT_2.png" width="500" />
@@ -36,12 +38,12 @@ Input embeddings are denoted as *E*, the final hidden vector corresponding to [C
 ### Masked Language Modeling (MLM)
 Also commonly known as a *Cloze* task, MLM involves masking a percentage of the input tokens and then predicting them. The final hidden vectors corresponding to the masked tokens are fed into a softmax layer over the vocabulary to predict the masked token, as in a standard LM. 
 
-In every experiment, 15% of the tokens are masked at random. Out of the masked tokens that are chosen: \
+In every experiment, 15% of the tokens are masked at random. Out of the masked tokens that are chosen:
 * 80% of them are replaced with the [MASK] token
 * 10% of them are replaced with a random word
 * 10% are kept as is
 
-$T_i$ is used to predict the original token with cross entropy loss used to backpropagate the gradients.
+$T_i$ is used to predict the original token, with cross entropy loss used to backpropagate the gradients.
 
 ### Next Sentence Prediction (NSP)
 Important downstream tasks require an understanding of the relationship between sentences, which language modeling cannot directly capture. Hence, a binarized next sentence prediction task is used to train the model.
@@ -49,7 +51,7 @@ Important downstream tasks require an understanding of the relationship between 
 For each example, 2 sentences `A` and `B` are chosen. 50% of the time, `B` is the sentence after `A` (labeled `IsNext`), and 50% of the time, `B` is a random sentence from the corpus (labeled `NotNext`). *C* is used as the predictor.
 
 ## Fine-tuning
-The self-attention mechanism in the transformer allows BERT to perform various downstream tasks with ease. For any task, the inputs and outputs are fed into BERT, and all the parameters are fine-tuned end-to-end. The sentence `A` and `B` pairing from pre-training are analogous to: \
+The self-attention mechanism in the transformer allows BERT to perform various downstream tasks with ease. For any task, the inputs and outputs are fed into BERT, and all the parameters are fine-tuned end-to-end. The sentence `A` and `B` pairing from pre-training are analogous to:
 * sentence pairs in paraphrasing
 * hypothesis-premise pairs in entailment
 * question-passage pairs in question answering
@@ -70,7 +72,7 @@ Batch size: 32 \
 Epochs: 3 \
 Learning rate: best among [5e-5, 4e-5, 3e-5, and 2e-5]
 
-For $BERT_LARGE$, fine-tuning was sometimes unstable; hence random restarts were run and the best performing model on the dev set was selected.
+For $BERT_\text{LARGE}$, fine-tuning was sometimes unstable; hence random restarts were run and the best performing model on the dev set was selected.
 
 <div align="center">
   <img src=".././assets/BERT_3.png" width="500" />
@@ -140,7 +142,7 @@ Learning rate: 2e-5
 ## Ablation Studies
 These are experiments where a part of the model is removed, and then trained and compared to the original model. It is a common practice in model design, and helps to decide whether a particular component is necessary or not.
 
-The following variants are tested: \
+The following variants are tested:
 * **No NSP**: BERT model trained on MLM and not NSP
 * **LTR & NO NSP**: BERT model trained using standard left-to-right language modeling, and no NSP
 
