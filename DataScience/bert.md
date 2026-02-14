@@ -13,7 +13,7 @@ The model is pre-trained on unlabeled data over different tasks. For any downstr
   <p><i>Visualization of pre-training and fine-tuning tasks</i></p>
 </div>
 
-BERT is a multi-layer bidirectional transformer. The number of layers is denoted as *L*, the hidden size as *H*, and the number of self-attention heads as *A*. Two models are primarily reported on, $\textbf{BERT_\text{BASE}}$ (12 layers, 768 hidden size, 12 attention heads per layer, 110M parameters) and $\textbf{BERT_\text{LARGE}}$ (24 layers, 1024 hidden size, 16 attention heads per layer, 340M parameters).
+BERT is a multi-layer bidirectional transformer. The number of layers is denoted as *L*, the hidden size as *H*, and the number of self-attention heads as *A*. Two models are primarily reported on, $\mathbf{BERT_{BASE}}$ (12 layers, 768 hidden size, 12 attention heads per layer, 110M parameters) and $\mathbf{BERT_{LARGE}}$ (24 layers, 1024 hidden size, 16 attention heads per layer, 340M parameters).
 
 $BERT_\text{BASE}$ has a similar model size to OpenAI's GPT model. The key difference between the models is that the BERT transformer uses bidirectional self-attention, while the GPT transformer uses constrained self-attention. 
 
@@ -55,7 +55,7 @@ The self-attention mechanism in the transformer allows BERT to perform various d
 * sentence pairs in paraphrasing
 * hypothesis-premise pairs in entailment
 * question-passage pairs in question answering
-* a degenerate text-$\emptyset$ pair in text classification/sequence tagging
+* a degenerate text-\(\emptyset\) pair in text classification/sequence tagging
 
 For token-level tasks the output token hidden vectors are fed into an output layer. For classification tasks the [CLS] token is fed into an output layer.
 
