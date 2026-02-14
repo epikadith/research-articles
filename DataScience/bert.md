@@ -24,7 +24,7 @@ To separate sentences, a special separator token ([SEP]) is added between the se
 
 Learned position embeddings are added, unlike the sinusoidal position embeddings used in the original transformer model.
 
-Input embeddings are denoted as *E*, the final hidden vector corresponding to [CLS] as $\textit{C} \in \mathbb{R}^H$, and the final hidden vector corresponding to the $\textit{i}^th$ token as $\textit{T_i} \in \mathbb{R}^H$. Hence, a token's representation is the sum of token, segment, and position embeddings. 
+Input embeddings are denoted as *E*, the final hidden vector corresponding to [CLS] as $C \in \mathbb{R}^H$, and the final hidden vector corresponding to the ${i}^th$ token as $T_i \in \mathbb{R}^H$. Hence, a token's representation is the sum of token, segment, and position embeddings. 
 
 <div align="center">
   <img src=".././assets/BERT_2.png" width="500" />
@@ -41,7 +41,7 @@ In every experiment, 15% of the tokens are masked at random. Out of the masked t
 * 10% of them are replaced with a random word
 * 10% are kept as is
 
-$\textit{T_i}$ is used to predict the original token with cross entropy loss used to backpropagate the gradients.
+$T_i$ is used to predict the original token with cross entropy loss used to backpropagate the gradients.
 
 ### Next Sentence Prediction (NSP)
 Important downstream tasks require an understanding of the relationship between sentences, which language modeling cannot directly capture. Hence, a binarized next sentence prediction task is used to train the model.
@@ -61,10 +61,10 @@ For token-level tasks the output token hidden vectors are fed into an output lay
 The BERT model is used to perform various NLP tasks and benchmarks.
 ### GLUE (General Language Understanding Evaluation)
 To fine-tune on the various GLUE tests, *C* is used as the final aggregate representation. The new parameters introduced are:
-* $\textit{W} \in \mathbb{R}^{\textit{K} \times \textit{H}}$ 
+* $W \in \mathbb{R}^{K \times H}$ 
 where *K* is the number of labels
 
-A standard classification loss is computed with *C* and *W*: log(softmax($\textit{CW^T}$))
+A standard classification loss is computed with *C* and *W*: log(softmax($CW^T$))
 
 Batch size: 32 \
 Epochs: 3 \
@@ -80,9 +80,9 @@ For $BERT_LARGE$, fine-tuning was sometimes unstable; hence random restarts were
 ### SQuAD (Stanford Question Answering Dataset) v1.1
 In this task, a question and a Wikipedia passage containing the answer are provided, and the answer text span in the passage is to be predicted.
 
-The question and passage are represented as a single sequence, with the question using the `A` embedding and the passage using the `B` embedding. A start vector $\textit{S} \in \mathbb{R}^H$ and an end vector $\textit{E} \in \mathbb{R}^H$ are introduced during training. The probability of the $i^{\text{th}}$ word being the start of the answer is computed as
+The question and passage are represented as a single sequence, with the question using the `A` embedding and the passage using the `B` embedding. A start vector $S \in \mathbb{R}^H$ and an end vector $E \in \mathbb{R}^H$ are introduced during training. The probability of the $i^{\text{th}}$ word being the start of the answer is computed as
 
-$$\textit{P_i} = \frac{e^{\textit{S \cdot T_i}}}{\sum_{j} e^{\textit{S \cdot T_j}}}$$
+$$P_i = \frac{e^{S \cdot T_i}}{\sum_{j} e^{S \cdot T_j}}$$
 
 The analogous formula is used for the end of the answer. 
 
@@ -110,7 +110,7 @@ The score of the best non-null span is given by:
 
 $$s_{\hat{i},j} = \max_{j \ge i} (S \cdot T_i + E \cdot T_j)$$
 
-A non-null answer is predicted when $\textit{s}_\textit{\hat{i},j} \gt \textit{s}_null + \tau$, where the threshold $\tau$ is selected on the dev set to maximize F1 score.
+A non-null answer is predicted when $s_{\hat{i},j} \gt s_\text{null} + \tau$, where the threshold $\tau$ is selected on the dev set to maximize F1 score.
 
 Batch size: 48 \
 Epochs: 2 \
