@@ -72,7 +72,7 @@ The premise $p$ and hypothesis $h$ are concatenated with a delimiter token ($) i
 The two sentences are concatenated with a delimiter. This is done twice, with the sentences swapping order. The outputs from each $h_l^m$ are added element-wise, and then passed to the linear layer.
 
 #### Question Answering and Commonsense Reasoning
-The context document $z$ and question $q$ are concatenated, and then that is concatenated with all the $k$ answers $a_k$ with a delimiter in between. This results in the sequence $[z; q; \text{\$}; a_k]$. Each of the sequences corresponding to each answer is passed through the transformer as well as linear layer, and the final outputs are normalized via a softmax layer to produce an output distribution over the label vocabulary.
+The context document $z$ and question $q$ are concatenated, and then that is concatenated with all the $k$ answers $a_k$ with a delimiter in between. This results in the sequence $[z; q; \text{&#36;}; a_k]$. Each of the sequences corresponding to each answer is passed through the transformer as well as linear layer, and the final outputs are normalized via a softmax layer to produce an output distribution over the label vocabulary.
 
 ## Supervised Tasks
 Fine-tuning was performed on a variety of tasks.
