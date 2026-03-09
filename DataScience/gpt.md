@@ -66,7 +66,7 @@ $$L_3(\mathcal{C}) = L_2(\mathcal{C}) + \lambda \ast L_1(\mathcal{C})$$
 All inputs include randomly initialized start and end tokens($\langle s \rangle$, $\langle e \rangle$). Certain tasks require specific structured inputs.
 
 #### Textual Entailment
-The premise $p$ and hypothesis $h$ are concatenated with a delimiter token ($) in between.
+The premise $p$ and hypothesis $h$ are concatenated with a delimiter token (\$) in between.
 
 #### Similarity
 The two sentences are concatenated with a delimiter. This is done twice, with the sentences swapping order. The outputs from each $h_l^m$ are added element-wise, and then passed to the linear layer.
